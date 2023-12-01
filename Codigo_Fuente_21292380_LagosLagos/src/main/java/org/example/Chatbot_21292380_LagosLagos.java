@@ -16,4 +16,24 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
         this.startFlowId = startFlowId;
         this.flows = flows;
     }
+
+    public int getChatbotID() {
+        return chatbotID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getWelcomeMessage() {
+        return welcomeMessage;
+    }
+
+    public int getStartFlowId() {
+        return startFlowId;
+    }
+
+    public List<Flow_21292380_LagosLagos> getFlows() {
+        return flows;
+    }
 }
