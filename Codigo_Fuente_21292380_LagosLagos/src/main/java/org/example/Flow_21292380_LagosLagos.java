@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_LagosLagos {
     int id;
-    String namemsg;
+    String nameMsg;
     List<Option_21292380_LagosLagos> options;
 
-    public Flow_21292380_LagosLagos(int id, String namemsg, List<Option_21292380_LagosLagos> options) {
+    public Flow_21292380_LagosLagos(int id, String nameMsg, List<Option_21292380_LagosLagos> options) {
         this.id = id;
-        this.namemsg = namemsg;
+        this.nameMsg = nameMsg;
         this.options = options;
     }
 
@@ -17,11 +17,15 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
         return id;
     }
 
-    public String getNamemsg() {
-        return namemsg;
+    public String getNameMsg() {
+        return nameMsg;
     }
 
     public List<Option_21292380_LagosLagos> getOptions() {
         return options;
+    }
+
+    public void flowAddOption(Option_21292380_LagosLagos option) {
+        this.options.add(option);
     }
 }
