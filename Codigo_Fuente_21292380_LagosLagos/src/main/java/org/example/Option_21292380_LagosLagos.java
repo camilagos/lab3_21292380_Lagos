@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Option_21292380_LagosLagos implements OptionComportamiento_21292380_LagosLagos {
@@ -14,9 +15,18 @@ public class Option_21292380_LagosLagos implements OptionComportamiento_21292380
         this.message = message;
         this.chatbotCodeLink = chatbotCodeLink;
         this.initialFlowCodeLink = initialFlowCodeLink;
-        this.keywords = keywords;
+        this.keywords = upperCaseKeywords(keywords);
     }
 
+    public List<String> upperCaseKeywords(List<String> keywords) {
+        List<String> filteredKeywords = new ArrayList<>();
+        for (String keyword : keywords) {
+            if (keyword != null) {
+                filteredKeywords.add(keyword.toUpperCase());
+            }
+        }
+        return filteredKeywords;
+    }
 
     public int getCode() {
         return code;
