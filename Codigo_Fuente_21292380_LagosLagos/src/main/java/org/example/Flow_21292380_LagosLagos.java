@@ -14,7 +14,7 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
         this.options = removeDuplicateOptions(options);
     }
 
-    private List<Option_21292380_LagosLagos> removeDuplicateOptions(List<Option_21292380_LagosLagos> options) {
+    public List<Option_21292380_LagosLagos> removeDuplicateOptions(List<Option_21292380_LagosLagos> options) {
         List<Option_21292380_LagosLagos> optionsSinDup = new ArrayList<>();
         List<Integer> codeSinDup = new ArrayList<>();
 
@@ -41,6 +41,15 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
     }
 
     public void flowAddOption(Option_21292380_LagosLagos option) {
-        this.options.add(option);
+        boolean optionExists = false;
+        for (Option_21292380_LagosLagos existingOption : this.options) {
+            if (existingOption.getCode() == option.getCode()) {
+                optionExists = true;
+                break;
+            }
+        }
+        if (!optionExists) {
+            this.options.add(option);
+        }
     }
 }
