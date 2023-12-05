@@ -51,4 +51,17 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
     public List<Flow_21292380_LagosLagos> getFlows() {
         return flows;
     }
+
+    public void chatbotAddFlow(Flow_21292380_LagosLagos flow) {
+        boolean flowExists = false;
+        for (Flow_21292380_LagosLagos existingFlow : this.flows) {
+            if (existingFlow.getId() == flow.getId()) {
+                flowExists = true;
+                break;
+            }
+        }
+        if (!flowExists) {
+            this.flows.add(flow);
+        }
+    }
 }
