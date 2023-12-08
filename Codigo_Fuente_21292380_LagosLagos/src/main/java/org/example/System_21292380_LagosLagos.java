@@ -29,4 +29,29 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         }
         return chatbotsSinDup;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getInitialChatbotCodeLink() {
+        return InitialChatbotCodeLink;
+    }
+
+    public List<Chatbot_21292380_LagosLagos> getChatbots() {
+        return chatbots;
+    }
+
+    public void systemAddChatbot(Chatbot_21292380_LagosLagos chatbot) {
+        boolean chatbotExists = false;
+        for (Chatbot_21292380_LagosLagos existingCB : this.chatbots) {
+            if (existingCB.getChatbotID() == chatbot.getChatbotID()) {
+                chatbotExists = true;
+                break;
+            }
+        }
+        if (!chatbotExists) {
+            this.chatbots.add(chatbot);
+        }
+    }
 }
