@@ -52,4 +52,13 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
             this.options.add(option);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Flow_21292380_LagosLagos{" +
+                "id=" + id +
+                ", nameMsg='" + nameMsg + '\'' +
+                ", options=" + options +
+                '}';
+    }
 }

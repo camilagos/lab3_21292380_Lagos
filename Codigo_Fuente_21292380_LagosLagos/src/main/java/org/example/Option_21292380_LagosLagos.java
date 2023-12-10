@@ -47,4 +47,15 @@ public class Option_21292380_LagosLagos implements OptionComportamiento_21292380
     public List<String> getKeywords() {
         return keywords;
     }
+
+    @Override
+    public String toString() {
+        return "Option_21292380_LagosLagos{" +
+                "code=" + code +
+                ", message='" + message + '\'' +
+                ", chatbotCodeLink=" + chatbotCodeLink +
+                ", initialFlowCodeLink=" + initialFlowCodeLink +
+                ", keywords=" + keywords +
+                '}';
+    }
 }

@@ -64,4 +64,15 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
             this.flows.add(flow);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Chatbot_21292380_LagosLagos{" +
+                "chatbotID=" + chatbotID +
+                ", name='" + name + '\'' +
+                ", welcomeMessage='" + welcomeMessage + '\'' +
+                ", startFlowId=" + startFlowId +
+                ", flows=" + flows +
+                '}';
+    }
 }
