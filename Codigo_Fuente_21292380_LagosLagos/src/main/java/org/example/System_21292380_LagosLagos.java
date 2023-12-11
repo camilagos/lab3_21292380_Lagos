@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class System_21292380_LagosLagos implements SystemComportamiento_21292380_LagosLagos{
     String name;
     int initialChatbotCodeLink;
@@ -16,7 +17,12 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
     int newCodeFl;
 
 
-
+    /**
+     * Descripción: Método que permite crear un sistema.
+     * @param name
+     * @param initialChatbotCodeLink
+     * @param chatbots
+     */
     public System_21292380_LagosLagos(String name, int initialChatbotCodeLink, List<Chatbot_21292380_LagosLagos> chatbots) {
         this.name = name;
         this.initialChatbotCodeLink = initialChatbotCodeLink;
@@ -29,6 +35,11 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         this.newCodeFl = 0;
     }
 
+    /**
+     * Descripción: Método que permite remover chatbots duplicados de una lista.
+     * @param chatbots
+     * @return
+     */
     public List<Chatbot_21292380_LagosLagos> removeDuplicateCBs(List<Chatbot_21292380_LagosLagos> chatbots) {
         List<Chatbot_21292380_LagosLagos> chatbotsSinDup = new ArrayList<>();
         List<Integer> chatbotIDSinDup = new ArrayList<>();
@@ -43,12 +54,215 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         return chatbotsSinDup;
     }
 
+    /**
+     * Descripción: Método que permite obtener la fecha actual.
+     * @return
+     */
     public String obtenerFecha() {
         Calendar calendario = Calendar.getInstance();
         int year = calendario.get(Calendar.YEAR);
         int mes = calendario.get(Calendar.MONTH) + 1;
         int dia = calendario.get(Calendar.DAY_OF_MONTH);
         return dia + "-" + mes + "-" + year;
+    }
+
+    /**
+     * Descripción: Método que permite agregar un chatbot a un sistema.
+     * @param chatbot
+     */
+    public void systemAddChatbot(Chatbot_21292380_LagosLagos chatbot) {
+        boolean chatbotExists = false;
+        for (Chatbot_21292380_LagosLagos existingCB : this.chatbots) {
+            if (existingCB.getChatbotID() == chatbot.getChatbotID()) {
+                chatbotExists = true;
+                break;
+            }
+        }
+        if (!chatbotExists) {
+            this.chatbots.add(chatbot);
+        }
+    }
+
+    /**
+     * Descripción: Método que permite agregar un usuario a un sistema.
+     * @param usuario
+     */
+    public void systemAddUser(Usuario_21292380_LagosLagos usuario) {
+        boolean userExists = false;
+        for (Usuario_21292380_LagosLagos existingUser : this.usuarios) {
+            if (existingUser.getNameUser().equals(usuario.getNameUser())) {
+                userExists = true;
+                System.out.println("Usuario ya existente.");
+                break;
+            }
+        }
+        if(!userExists) {
+            this.usuarios.add(usuario);
+            System.out.println("Usuario registrado exitosamente.");
+        }
+    }
+
+    /**
+     * Descripción: Método que permite iniciar sesión en un sistema.
+     * @param user
+     */
+    public void systemLogin(String user) {
+        if (this.usuarioLogueado != null) {
+        System.out.println("Ya hay una sesión abierta");
+        return;
+        }
+        boolean usuarioEncontrado = false;
+        for (Usuario_21292380_LagosLagos usuario : this.usuarios) {
+           if (usuario.getNameUser().equals(user)) {
+               usuarioEncontrado = true;
+               break;
+           }
+        }
+        if (usuarioEncontrado) {
+            this.usuarioLogueado = user;
+            System.out.println("Inicio de sesión exitoso");
+        }
+        else {
+            System.out.println("El usuario ingresado no existe");
+        }
+    }
+
+    /**
+     * Descripción: Método que permite cerrar sesión en un sistema.
+     */
+    public void systemLogout() {
+        this.usuarioLogueado = null;
+        System.out.println("Sesión cerrada exitosamente");
+    }
+
+    /**
+     * Descripción: Método que permite interactuar en un sistema.
+     * @param message
+     */
+    public void systemtalk(String message) {
+        if (this.usuarioLogueado == null) {
+            System.out.println("No hay una sesión abierta");
+            return;
+        }
+
+        if (this.estado.equals("Sin interacciones válidas")) {
+            for (Chatbot_21292380_LagosLagos cb : this.chatbots) {
+                if (cb.getChatbotID() == this.initialChatbotCodeLink) {
+                    for (Flow_21292380_LagosLagos flow : cb.getFlows()) {
+                        if (cb.getStartFlowId() == flow.getId()) {
+                            for (Option_21292380_LagosLagos option : flow.getOptions()) {
+                                for (String keyword : option.getKeywords()) {
+                                    if (keyword.equals(message.toUpperCase()) || Integer.toString(option.getCode()).equals(message)) {
+                                        this.newCodeCB = option.getChatbotCodeLink();
+                                        this.newCodeFl = option.getInitialFlowCodeLink();
+                                        this.estado = "Con interacciones válidas";
+                                        ChatHistory_21292380_LagosLagos ch = new ChatHistory_21292380_LagosLagos(this.fechaActual, message, cb.getName(), flow.getNameMsg(), flow.getOptions());
+                                        for (Usuario_21292380_LagosLagos user : this.usuarios) {
+                                            if (user.getNameUser().equals(this.usuarioLogueado)) {
+                                                user.addChatHistory(ch);
+                                                System.out.println("Se completó la interacción");
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        ChatHistory_21292380_LagosLagos ch = new ChatHistory_21292380_LagosLagos(this.fechaActual, message, cb.getName(), flow.getNameMsg(), flow.getOptions());
+                                        for (Usuario_21292380_LagosLagos user : this.usuarios) {
+                                            if (user.getNameUser().equals(this.usuarioLogueado)) {
+                                                user.addChatHistory(ch);
+                                                System.out.println("No se encontró la opción, pero se guardó el historial");
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        else {
+            for (Chatbot_21292380_LagosLagos cb : this.chatbots) {
+                if (cb.getChatbotID() == this.newCodeCB) {
+                    for (Flow_21292380_LagosLagos flow : cb.getFlows()) {
+                        if (flow.getId() == this.newCodeFl) {
+                            for (Option_21292380_LagosLagos option : flow.getOptions()) {
+                                for (String keyword : option.getKeywords()) {
+                                    if (keyword.equals(message.toUpperCase()) || Integer.toString(option.getCode()).equals(message)) {
+                                        this.newCodeCB = option.getChatbotCodeLink();
+                                        this.newCodeFl = option.getInitialFlowCodeLink();
+                                        ChatHistory_21292380_LagosLagos ch = new ChatHistory_21292380_LagosLagos(this.fechaActual, message, cb.getName(), flow.getNameMsg(), flow.getOptions());
+                                        for (Usuario_21292380_LagosLagos user : this.usuarios) {
+                                            if (user.getNameUser().equals(this.usuarioLogueado)) {
+                                                user.addChatHistory(ch);
+                                                System.out.println("Se completó la interacción");
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        ChatHistory_21292380_LagosLagos ch = new ChatHistory_21292380_LagosLagos(this.fechaActual, message, cb.getName(), flow.getNameMsg(), flow.getOptions());
+                                        for (Usuario_21292380_LagosLagos user : this.usuarios) {
+                                            if (user.getNameUser().equals(this.usuarioLogueado)) {
+                                                user.addChatHistory(ch);
+                                                System.out.println("No se encontró la opción, pero se guardó el historial");
+                                                return;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Descripción: Método que permite visualizar el historial de un usuario en el sistema.
+     * @param usuario
+     */
+    public void systemsynthesis(String usuario) {
+        for (Usuario_21292380_LagosLagos user : this.usuarios) {
+            if (user.getNameUser().equals(usuario)) {
+                List<ChatHistory_21292380_LagosLagos> history = user.getHistory();
+                if (history.isEmpty()) {
+                    System.out.println("El usuario " + usuario + " no tiene historial.");
+                }
+                else {
+                    for (ChatHistory_21292380_LagosLagos chat : history) {
+                        System.out.println(chat.getFecha() + " - " + usuario + ": " + chat.getMessage());
+                        System.out.println(chat.getFecha() + " - " + chat.getNameCB() + ": " + chat.getNameFL());
+                        for (Option_21292380_LagosLagos op : chat.getOptions()) {
+                            System.out.println(op.getMessage());
+                        }
+                        System.out.println("\n");
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Descripción: Método que permite obtener el sistema como string.
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "System_21292380_LagosLagos{" +
+                "name='" + name + '\'' +
+                ", initialChatbotCodeLink=" + initialChatbotCodeLink +
+                ", chatbots=" + chatbots +
+                ", fechaActual='" + fechaActual + '\'' +
+                ", usuarios=" + usuarios +
+                ", usuarioLogueado='" + usuarioLogueado + '\'' +
+                ", estado='" + estado + '\'' +
+                ", newCodeCB=" + newCodeCB +
+                ", newCodeFl=" + newCodeFl +
+                '}';
     }
 
     public String getName() {
@@ -87,60 +301,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         return newCodeFl;
     }
 
+    public void mostrarOps(){
 
-    public void systemAddChatbot(Chatbot_21292380_LagosLagos chatbot) {
-        boolean chatbotExists = false;
-        for (Chatbot_21292380_LagosLagos existingCB : this.chatbots) {
-            if (existingCB.getChatbotID() == chatbot.getChatbotID()) {
-                chatbotExists = true;
-                break;
-            }
-        }
-        if (!chatbotExists) {
-            this.chatbots.add(chatbot);
-        }
     }
-
-    public void systemAddUser(Usuario_21292380_LagosLagos usuario) {
-        boolean userExists = false;
-        for (Usuario_21292380_LagosLagos existingUser : this.usuarios) {
-            if (existingUser.getNameUser().equals(usuario.getNameUser())) {
-                userExists = true;
-                break;
-            }
-        }
-        if(!userExists) {
-            this.usuarios.add(usuario);
-        }
-    }
-
-    public void systemLogin(String user) {
-        if (this.usuarioLogueado != null) {
-        System.out.println("Ya hay una sesión abierta");
-        return;
-        }
-        boolean usuarioEncontrado = false;
-        for (Usuario_21292380_LagosLagos usuario : this.usuarios) {
-           if (usuario.getNameUser().equals(user)) {
-               usuarioEncontrado = true;
-               break;
-           }
-        }
-        if (usuarioEncontrado) {
-            this.usuarioLogueado = user;
-            System.out.println("Inicio de sesión exitoso");
-        }
-        else {
-            System.out.println("El usuario ingresado no existe");
-        }
-    }
-
-    public void systemLogout() {
-        this.usuarioLogueado = null;
-        System.out.println("Sesión cerrada exitosamente");
-    }
-
-    
-
-
 }
