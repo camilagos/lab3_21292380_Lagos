@@ -18,6 +18,7 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
         this.id = id;
         this.nameMsg = nameMsg;
         this.options = removeDuplicateOptions(options);
+        System.out.println("\nEl flujo ha sido creado");
     }
 
     /**
@@ -77,6 +78,10 @@ public class Flow_21292380_LagosLagos implements FlowComportamiento_21292380_Lag
         }
         if (!optionExists) {
             this.options.add(option);
+            System.out.println("\nLa opcion ha sido agregada al flujo");
+        }
+        else {
+            System.out.println("\nLa opcion ya existe en el flujo");
         }
     }
 

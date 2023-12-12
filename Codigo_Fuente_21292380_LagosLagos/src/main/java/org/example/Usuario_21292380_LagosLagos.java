@@ -20,6 +20,14 @@ public class Usuario_21292380_LagosLagos implements UsuarioComportamiento_212923
     }
 
     /**
+     * Descripción: Metodo que permite saber si un usuario es admin o no.
+     * @return
+     */
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    /**
      * Descripción: Método que permite obtener el nombre de un usuario.
      * @return
      */
@@ -54,9 +62,5 @@ public class Usuario_21292380_LagosLagos implements UsuarioComportamiento_212923
                 ", nameUser='" + nameUser + '\'' +
                 ", history=" + history +
                 '}';
-    }
-
-    public boolean getIsAdmin() {
-        return isAdmin;
     }
 }

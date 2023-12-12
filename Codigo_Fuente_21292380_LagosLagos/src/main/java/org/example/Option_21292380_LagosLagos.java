@@ -24,6 +24,7 @@ public class Option_21292380_LagosLagos implements OptionComportamiento_21292380
         this.chatbotCodeLink = chatbotCodeLink;
         this.initialFlowCodeLink = initialFlowCodeLink;
         this.keywords = upperCaseKeywords(keywords);
+        System.out.println("\nLa opcion ha sido creada");
     }
 
     /**

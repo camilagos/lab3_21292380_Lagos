@@ -24,6 +24,7 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
         this.welcomeMessage = welcomeMessage;
         this.startFlowId = startFlowId;
         this.flows = removeDuplicateFlows(flows);
+        System.out.println("\nEl chatbot ha sido creado");
     }
 
     /**
@@ -62,14 +63,6 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
     }
 
     /**
-     * Descripción: Método que permite obtener el welcomeMessage de un chatbot.
-     * @return
-     */
-    public String getWelcomeMessage() {
-        return welcomeMessage;
-    }
-
-    /**
      * Descripción: Método que permite obtener el startFlowId de un chatbot.
      * @return
      */
@@ -99,6 +92,10 @@ public class Chatbot_21292380_LagosLagos implements ChatbotComportamiento_212923
         }
         if (!flowExists) {
             this.flows.add(flow);
+            System.out.println("\nEl flujo ha sido agregado al chatbot");
+        }
+        else {
+            System.out.println("\nEl flujo ya existe en el chatbot");
         }
     }
 

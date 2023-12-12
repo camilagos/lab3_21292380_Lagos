@@ -33,6 +33,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         this.estado = "Sin interacciones válidas";
         this.newCodeCB = 0;
         this.newCodeFl = 0;
+        System.out.println("\nEl sistema ha sido creado");
     }
 
     /**
@@ -67,6 +68,14 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
     }
 
     /**
+     * Descripción: Método que permite obtener la lista de usuarios de un sistema.
+     * @return
+     */
+    public List<Usuario_21292380_LagosLagos> getUsuarios() {
+        return usuarios;
+    }
+
+    /**
      * Descripción: Método que permite agregar un chatbot a un sistema.
      * @param chatbot
      */
@@ -80,6 +89,10 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         }
         if (!chatbotExists) {
             this.chatbots.add(chatbot);
+            System.out.println("\nEl chatbot ha sigo agregado al sistema");
+        }
+        else {
+            System.out.println("\nEl chatbot ya existe en el sistema");
         }
     }
 
@@ -92,13 +105,13 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         for (Usuario_21292380_LagosLagos existingUser : this.usuarios) {
             if (existingUser.getNameUser().equals(usuario.getNameUser())) {
                 userExists = true;
-                System.out.println("Usuario ya existente.");
+                System.out.println("\nEl usuario ya existe.");
                 break;
             }
         }
         if(!userExists) {
             this.usuarios.add(usuario);
-            System.out.println("Usuario registrado exitosamente.");
+            System.out.println("\nUsuario registrado exitosamente.");
         }
     }
 
@@ -108,7 +121,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
      */
     public void systemLogin(String user) {
         if (this.usuarioLogueado != null) {
-        System.out.println("Ya hay una sesión abierta");
+        System.out.println("\nYa hay una sesion abierta");
         return;
         }
         boolean usuarioEncontrado = false;
@@ -120,10 +133,10 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
         }
         if (usuarioEncontrado) {
             this.usuarioLogueado = user;
-            System.out.println("Inicio de sesión exitoso");
+            System.out.println("\nInicio de sesion exitoso");
         }
         else {
-            System.out.println("El usuario ingresado no existe");
+            System.out.println("\nEl usuario ingresado no existe");
         }
     }
 
@@ -132,7 +145,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
      */
     public void systemLogout() {
         this.usuarioLogueado = null;
-        System.out.println("Sesión cerrada exitosamente");
+        System.out.println("\nSesion cerrada exitosamente");
     }
 
     /**
@@ -141,7 +154,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
      */
     public void systemtalk(String message) {
         if (this.usuarioLogueado == null) {
-            System.out.println("No hay una sesión abierta");
+            System.out.println("\nNo hay una sesion abierta");
             return;
         }
 
@@ -160,7 +173,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                                         for (Usuario_21292380_LagosLagos user : this.usuarios) {
                                             if (user.getNameUser().equals(this.usuarioLogueado)) {
                                                 user.addChatHistory(ch);
-                                                System.out.println("Se completó la interacción");
+                                                System.out.println("\nSe completo la interaccion");
                                                 return;
                                             }
                                         }
@@ -170,7 +183,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                                         for (Usuario_21292380_LagosLagos user : this.usuarios) {
                                             if (user.getNameUser().equals(this.usuarioLogueado)) {
                                                 user.addChatHistory(ch);
-                                                System.out.println("No se encontró la opción, pero se guardó el historial");
+                                                System.out.println("\nNo se encontro la opcion, pero se guardo el historial");
                                                 return;
                                             }
                                         }
@@ -197,7 +210,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                                         for (Usuario_21292380_LagosLagos user : this.usuarios) {
                                             if (user.getNameUser().equals(this.usuarioLogueado)) {
                                                 user.addChatHistory(ch);
-                                                System.out.println("Se completó la interacción");
+                                                System.out.println("\nSe completo la interaccion");
                                                 return;
                                             }
                                         }
@@ -207,7 +220,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                                         for (Usuario_21292380_LagosLagos user : this.usuarios) {
                                             if (user.getNameUser().equals(this.usuarioLogueado)) {
                                                 user.addChatHistory(ch);
-                                                System.out.println("No se encontró la opción, pero se guardó el historial");
+                                                System.out.println("\nNo se encontro la opcion, pero se guardo el historial");
                                                 return;
                                             }
                                         }
@@ -234,7 +247,7 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                 }
                 else {
                     for (ChatHistory_21292380_LagosLagos chat : history) {
-                        System.out.println(chat.getFecha() + " - " + usuario + ": " + chat.getMessage());
+                        System.out.println("\n" + chat.getFecha() + " - " + usuario + ": " + chat.getMessage());
                         System.out.println(chat.getFecha() + " - " + chat.getNameCB() + ": " + chat.getNameFL());
                         for (Option_21292380_LagosLagos op : chat.getOptions()) {
                             System.out.println(op.getMessage());
@@ -265,43 +278,4 @@ public class System_21292380_LagosLagos implements SystemComportamiento_21292380
                 '}';
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getInitialChatbotCodeLink() {
-        return initialChatbotCodeLink;
-    }
-
-    public List<Chatbot_21292380_LagosLagos> getChatbots() {
-        return chatbots;
-    }
-
-    public String getFechaActual() {
-        return fechaActual;
-    }
-
-    public List<Usuario_21292380_LagosLagos> getUsuarios() {
-        return usuarios;
-    }
-
-    public String getUsuarioLogueado() {
-        return usuarioLogueado;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public int getNewCodeCB() {
-        return newCodeCB;
-    }
-
-    public int getNewCodeFl() {
-        return newCodeFl;
-    }
-
-    public void mostrarOps(){
-
-    }
 }
